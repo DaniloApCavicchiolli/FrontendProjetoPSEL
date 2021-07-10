@@ -5,7 +5,7 @@ import { Dark, Light } from './Themes'
 export const AppContext = createContext(null)
 
 export default ({children}) => {
-    const [tema, setTema] = useState(Light)
+    const [tema, setTema] = useState(Dark)
 
     return(
         <AppContext.Provider value={{tema: tema, setTema}}>

@@ -1,14 +1,13 @@
 import React from 'react'
-import CadastroScreen from './src/screens/Cadastro/CadastroScreen'
-import LoginScreen from './src/screens/Login/LoginScreen'
-import ThemeProvider from './themes/ThemeProvider'
+import Navigation from './src/routes/Navigation'
+import ThemeProvider from './src/themes/ThemeProvider'
 
 
 
 export default function App() {
   return (
     <ThemeProvider>
-      <CadastroScreen />
+      <Navigation />
     </ThemeProvider>
   )
 }
