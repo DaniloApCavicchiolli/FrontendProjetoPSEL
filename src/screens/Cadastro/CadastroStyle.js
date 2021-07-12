@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native"
+import { Dark } from "../../themes/Themes"
 
 export const cadastroStyle = StyleSheet.create({
     content : {
@@ -12,5 +13,13 @@ export const cadastroStyle = StyleSheet.create({
     },
     inputStyle: {
         backgroundColor: "transparent"
-    }
+    },
+    checkbox: {
+        flexDirection: 'row',
+        marginBottom: 32
+      },
+      text: {
+          color: Dark.colors.text,
+          marginTop: 10,
+       }
 })

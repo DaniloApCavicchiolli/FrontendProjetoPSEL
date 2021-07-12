@@ -1,38 +1,87 @@
-import React from 'react'
-import { View, FlatList, SafeAreaView } from 'react-native'
-import { ScrollView } from 'react-native-gesture-handler'
-import { withTheme, List, Text } from 'react-native-paper'
+import React, { useState, useEffect, useCallback } from 'react'
+import { View, FlatList, ActivityIndicator, Text, RefreshControl } from 'react-native'
+import { withTheme, List, FAB } from 'react-native-paper'
 import Header from '../../components/Header'
+import { userAdminStyle } from './UserAdminStyle'
+import { BACKEND } from '../../constants'
+import ListaRegistro from '../ListaRegistro/ListaRegistro'
 
-function UserAdminScreen({ navigation, theme }) {
-    const { colors } = theme
-    const opcoes = [
-        { id: 1, nome: 'User01', status: 'Ativo', menu: 'User01' },
-        { id: 2, nome: 'User02', status: 'Inativo', menu: 'User02' }
-    ]
+function UserAdminScreen({ navigation}) {
+   
+    const [registros, setRegistros] = useState([])
+    const [carregandoRegistros, setCarregandoRegistros] = useState(false)
+    const [refreshing, setRefreshing] = useState(false)
+
+    useEffect(() => {
+        obterRegistros()
+    }, [])//executar somente no load da interface
+
+    async function obterRegistros() {
+        setCarregandoRegistros(true)
+        let url = `${BACKEND}/registros`
+        await fetch(url)//tenta obter os dados
+            .then(response => response.json())
+            .then(data => {
+                setRegistros(data)
+                console.log('Registros obtidos com sucesso!')
+            })
+            .catch(function (error) {
+                console.error(`Houve um problema ao obter os registros: ${error.message}`)
+            })
+        setCarregandoRegistros(false)
+    }
+
+    const onRefresh = useCallback(async () => {
+        setRefreshing(true)
+            try{
+                await obterRegistros()
+            } catch (error){
+                console.error(error)
+            }
+        setRefreshing(false)
+    },[refreshing])
 
     return (
         <>
-            <Header titulo="Área Administrativa" back={true} navigation={navigation} />
-            <View style={{
-                backgroundColor: colors.surface, paddingHorizontal: 8,
-                paddingVertical: 8, flex: 1
-            }}>
-                <List.Subheader> Lista de Usuários:</List.Subheader>
-                <FlatList data={opcoes} renderItem={({ item }) => (
-                    <View style={{
-                        flex: 1, justifyContent: 'center', backgroundColor: colors.background,
-                        borderRadius: 20, margin: 8
-                    }}
-                    >
-                        <List.Item
-                            title={item.nome}
-                            description={item.status}
+            <Header titulo="Lista de Usuários" back={true} navigation={navigation}/>
+            <View style={userAdminStyle.View}>
+                <List.Subheader> Selecione uma opção:</List.Subheader>
+                {carregandoRegistros && <ActivityIndicator size="large" color={userAdminStyle.activityStyle} />}
+                {registros.length === 0 && !carregandoRegistros ? 
+                    (
+                        <View style={userAdminStyle.tituloAviso}>
+                            <Text style={userAdminStyle.titulo}>Ainda não tem nenhum registro</Text>
+                        </View>
+                    ) : (
+                        <FlatList data={registros} renderItem={({ item }) => (
+                            <View style={userAdminStyle.ViewItem}>
+                                <ListaRegistro data={item} navigation={navigation} />
+                            </View>
+                        )}
+                            keyExtractor={item => item._id.toString()}//diferenciar os elementos
+                            refreshControl={<RefreshControl 
+                                                refreshing={refreshing}
+                                                onRefresh={onRefresh} />
+                                            }
                         />
-                    </View>
-                )}
-                    keyExtractor={item => item.id.toString()}
+                    )
+                }
+                <FAB
+                    style={userAdminStyle.fab}
+                    icon='plus'
+                    label=''
+                    onPress={() => navigation.navigate('CadastroScreen', {
+                        data: {
+                            _id: null,
+                            nome: '',
+                            status: true,
+                            cpf: '',
+                            email: '',
+                            senha: '',
+                        }
+                    })}
                 />
+                
             </View>
         </>
     )

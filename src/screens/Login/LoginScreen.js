@@ -33,7 +33,16 @@ function LoginScreen({navigation}){
                             Login
                         </Button>
                         <Button
-                            onPress={() => navigation.navigate('CadastroScreen')} 
+                            onPress={() => navigation.navigate('CadastroScreen', {
+                                data: {
+                                    _id: null,
+                                    nome: '',
+                                    status: true,
+                                    cpf: '',
+                                    email: '',
+                                    senha: '',
+                                }
+                            })} 
                             style={loginStyle.cardButton}>
                             Cadastrar
                         </Button>
