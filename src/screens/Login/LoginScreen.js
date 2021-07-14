@@ -31,7 +31,7 @@ function LoginScreen({navigation}){
                 if(data.nivel === 999){
                     navigation.navigate('UserAdminScreen')
                 }else {
-                    navigation.navigate('UserComumScreen')
+                    navigation.navigate('UserComumScreen', {data: data})
                 }
             })
             .catch(function (error) {

@@ -5,14 +5,14 @@ import { userComumStyle } from './UserComumStyle'
 
 import Header from '../../components/Header'
 
-function UserComumScreen({ navigation }) {
+function UserComumScreen({ navigation, route }) {
 
-    const [nome, setNome] = useState('')
-    const [cpf, setCpf] = useState('')
-    const [email, setEmail] = useState('')
-    const [senha, setSenha] = useState('')
-    const [status, setStatus] = useState('')
+    const { data } = route.params
 
+    const [nome, setNome] = useState(data.nome)
+    const [cpf, setCpf] = useState(data.cpf)
+    const [email, setEmail] = useState(data.email)
+    const [senha, setSenha] = useState(data.senha)
 
     return (
         <SafeAreaView style={{flex: 1}}>
@@ -31,7 +31,6 @@ function UserComumScreen({ navigation }) {
                     value={nome}
                     mode='outlined'
                     disabled={true}
-                    onChangeText={setNome}
                     style={userComumStyle.input}
                 />
 
@@ -41,7 +40,6 @@ function UserComumScreen({ navigation }) {
                     value={cpf}
                     mode='outlined'
                     disabled={true}
-                    onChangeText={setCpf} 
                     style={userComumStyle.input}
                 />
 
@@ -51,7 +49,6 @@ function UserComumScreen({ navigation }) {
                     value={email}
                     mode='outlined'
                     disabled={true}
-                    onChangeText={setEmail}
                     keyboardType="email-address"  
                     style={userComumStyle.input}
                 />
@@ -61,7 +58,6 @@ function UserComumScreen({ navigation }) {
                     value={senha}
                     mode='outlined'
                     disabled={true}
-                    onChangeText={setSenha}
                     secureTextEntry={true} 
                     style={userComumStyle.input}
                 />
