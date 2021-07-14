@@ -38,5 +38,12 @@ export const listaRegistroStyle = StyleSheet.create({
     },
     textStyle: {
         color: Dark.colors.text
+    },
+    imagemStyle: {
+        width: 50, 
+        height: 50, 
+        marginTop: -64, 
+        marginLeft: 8, 
+        marginBottom: 8 
     }
 })

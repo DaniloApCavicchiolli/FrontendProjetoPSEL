@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, Text, TouchableOpacity, Alert, ActivityIndicator } from 'react-native'
+import { View, Text, TouchableOpacity, Alert, ActivityIndicator, Image } from 'react-native'
 import { List, withTheme, Avatar } from 'react-native-paper'
 import Swipeable from 'react-native-gesture-handler/Swipeable'
 import { BACKEND } from '../../constants'
@@ -78,8 +78,10 @@ function ListaRegistro({ data, navigation }){
                         <List.Item
                             title={data.nome}
                             description={`status: ${data.status}`}
+                            //leftAvatar={{ source: { uri: `${BACKEND}/${data.foto.path}` } }}
                             left={props => <List.Icon {...props} icon="image" />}
                         />
+                        {/* {renderizaImagem(`${BACKEND}/${data.foto.path}`)} */}
                     </View>
                 </TouchableOpacity>
             </Swipeable>

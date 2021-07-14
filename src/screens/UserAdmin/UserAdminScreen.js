@@ -77,7 +77,7 @@ function UserAdminScreen({ navigation}) {
                             status: true,
                             cpf: '',
                             email: '',
-                            senha: '',
+                            senha: ''
                         }
                     })}
                 />

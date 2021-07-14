@@ -1,5 +1,6 @@
 import { StyleSheet } from "react-native";
 import { Dark } from '../../themes/Themes'
+import { COLORS } from "../../constants";
 
 export const loginStyle = StyleSheet.create({
     content: {
@@ -8,7 +9,7 @@ export const loginStyle = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         flexDirection: "row",
-        backgroundColor: Dark.colors.background
+        backgroundColor: Dark.colors.surface
     },
     View: {
         width: "80%",
@@ -27,6 +28,10 @@ export const loginStyle = StyleSheet.create({
         marginRight:0
     },
     cardInput : {
-        backgroundColor: "transparent"
+        backgroundColor: Dark.colors.background,
+        marginBottom: 15,
+        color: COLORS.lightGray,
+        borderRadius: 7,
+        padding: 15,
     }
 })

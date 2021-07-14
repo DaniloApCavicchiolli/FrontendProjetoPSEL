@@ -1,11 +1,12 @@
-import React, { useState } from 'react'
-import { SafeAreaView, ScrollView, View, Text } from 'react-native'
-import { Button, HelperText, TextInput, withTheme, Checkbox } from 'react-native-paper'
+import React, { useEffect, useState } from 'react'
+import { SafeAreaView, ScrollView, View, Text, Alert, Image } from 'react-native'
+import { Button, HelperText, TextInput, withTheme, Checkbox, ProgressBar, Avatar } from 'react-native-paper'
 import  Header  from '../../components/Header'
 import { cadastroStyle } from './CadastroStyle'
 import { BACKEND } from '../../constants'
+//import AsyncStorage from '@react-native-async-storage/async-storage';
 
-//import * as DocumentPiker from 'expo-document-piker'
+//import * as DocumentPicker from 'expo-document-picker'
 
 function CadastroScreen({navigation, route }){
 
@@ -17,10 +18,14 @@ function CadastroScreen({navigation, route }){
     const [email, setEmail] = useState(data.email)
     const [senha, setSenha] = useState(data.senha)
     const [status, setStatus] = useState(data.status)
+    const [nivel, setNivel] = useState(data.nivel)
 
+    const [visivel, setVisivel] = useState(false)
+    const [upload, setUpload] = useState(false)
     const [salvandoRegistro, setSalvandoRegistro] = useState(false)
     const [erros, setErros] = useState({})
     const [aviso, setAviso] = useState('')
+
 
     const validaErrosRegistro = () => {
         const novosErros = {}
@@ -39,14 +44,14 @@ function CadastroScreen({navigation, route }){
           // Sim, temos erros!
           setErros(novosErros)
         } else {
-          //Verificamos se o registro possui _id. Se não tiver, inserimos via POST(insert), senão alteramos via PUT(update)
+          //Se o _id for nulo, faremos o POST(insert), senão faremos o PUT(update)
           const metodo = data._id === null ? 'POST' : 'PUT'
           let statusRegistro = (status === true || status === 'ativo') ? 'ativo' : 'inativo'
           let registro = { nome: nome, 
                             status: statusRegistro, 
                             cpf: cpf, 
                             email: email, 
-                            senha: senha, 
+                            senha: senha,
                             _id: data._id 
                         }
           setSalvandoRegistro(true)
@@ -61,7 +66,7 @@ function CadastroScreen({navigation, route }){
             body: JSON.stringify(registro)
           }).then(response => response.json())
             .then(data => {
-              (data._id || data.message) ? setAviso('Registro salvo com sucesso!') : setAviso('')
+              (data._id || data.message) ? setAviso('Registro salvo com sucesso!') : setAviso('')//não tem nada
               setNome('')
               setCpf('')
               setEmail('')
@@ -69,13 +74,12 @@ function CadastroScreen({navigation, route }){
               Alert.alert('Registro salvo com sucesso!')
             })
             .catch(function (error) {
-              setAviso(`Não foi possível salvar o registro: ${error.message}`)
+              setAviso(`Não foi possível salvar o registro: ${error.message}`)// tem alguma coisa
               console.error('Houve um problema ao salvar o registro: ' + error.message);
             })
             setSalvandoRegistro(false)
         }
       }
-
 
     return (
         <SafeAreaView>
@@ -126,8 +130,8 @@ function CadastroScreen({navigation, route }){
                         label="Senha"
                         name="senha"
                         value={senha}
-                        error={!!erros.senha}
                         onChangeText={setSenha}
+                        error={!!erros.senha}
                         secureTextEntry={true} 
                         style={cadastroStyle.inputStyle}/>
                     <HelperText 
@@ -136,7 +140,7 @@ function CadastroScreen({navigation, route }){
                         {erros.senha}
                     </HelperText>
 
-                    <View style={cadastroStyle.checkbox}>
+                    {visivel && <View style={cadastroStyle.checkbox}>
                         <Checkbox
                             status={status ? 'checked' : 'unchecked'}
                                 onPress={() => {
@@ -144,9 +148,16 @@ function CadastroScreen({navigation, route }){
                                 }}
                         />
                         <Text style={cadastroStyle.text}>Ativa?</Text>
-                    </View>
-
-
+                    </View>}
+                    {upload && <ProgressBar indeterminate={true} style={cadastroStyle.progressStyle}/>}
+                    
+                    <Button 
+                        icon="camera" 
+                        mode="contained" 
+                        onPress={() => {}} 
+                        style={cadastroStyle.button}>
+                        Selecionar Imagem
+                    </Button>
 
                     <Button
                         disabled={erros.length > 0}

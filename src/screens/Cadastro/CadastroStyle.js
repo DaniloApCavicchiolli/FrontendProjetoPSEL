@@ -4,12 +4,16 @@ import { Dark } from "../../themes/Themes"
 export const cadastroStyle = StyleSheet.create({
     content : {
         padding: 15,
-        paddingtop: 0
+        paddingTop: 0
     },
     button: {
-        margin: 15,
+        margin: 5,
         marginLeft: 0,
         marginRight: 0
+    },
+    buttonImg : {
+        marginTop: 32, 
+        padding: 8
     },
     inputStyle: {
         backgroundColor: "transparent"
@@ -21,5 +25,14 @@ export const cadastroStyle = StyleSheet.create({
       text: {
           color: Dark.colors.text,
           marginTop: 10,
+       },
+       textAvatar: {
+        color: Dark.colors.text, 
+        paddingTop: 8, 
+        paddingLeft: 16 
+       },
+       progressStyle: {
+           marginTop: 8,
+           marginBottom: 8
        }
 })
