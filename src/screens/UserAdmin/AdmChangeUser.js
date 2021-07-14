@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react'
 import { SafeAreaView, ScrollView, View, Text, Alert, Image } from 'react-native'
 import { Button, HelperText, TextInput, withTheme, Checkbox, ProgressBar, Avatar } from 'react-native-paper'
 import  Header  from '../../components/Header'
-import { cadastroStyle } from './CadastroStyle'
+import { admChangeUserStyle } from './AdmChangeUserStyle'
 import { BACKEND } from '../../constants'
 
-function CadastroScreen({navigation, route }){
+function AdmChangeUser({navigation, route }){
 
     //Obtendo os dados da alteração via rota
     const { data } = route.params
@@ -15,9 +15,7 @@ function CadastroScreen({navigation, route }){
     const [email, setEmail] = useState(data.email)
     const [senha, setSenha] = useState(data.senha)
     const [status, setStatus] = useState(data.status)
-    const [nivel, setNivel] = useState(data.nivel)
 
-    const [visivel, setVisivel] = useState(false)
     const [upload, setUpload] = useState(false)
     const [salvandoRegistro, setSalvandoRegistro] = useState(false)
     const [erros, setErros] = useState({})
@@ -65,9 +63,11 @@ function CadastroScreen({navigation, route }){
           }).then(response => response.json())
             .then(data => {
               (data._id || data.message) ? setAviso('Registro salvo com sucesso!') : setAviso('')//não tem nada
-
-              Alert.alert('Salvando...','Registro salvo com sucesso!')
-              navigation.navigate('LoginScreen')
+                setNome('')
+                setCpf('')
+                setEmail('')
+                setSenha('')
+                Alert.alert('Salvando...','Registro salvo com sucesso!')
             })
             .catch(function (error) {
               setAviso(`Não foi possível salvar o registro: ${error.message}`)// tem alguma coisa
@@ -80,15 +80,15 @@ function CadastroScreen({navigation, route }){
     return (
         <SafeAreaView>
             <ScrollView>
-                <Header titulo="Cadastro" back={true} navigation={navigation}/>
-                <View style={cadastroStyle.content}>
+                <Header titulo="Alterar usuário" back={true} navigation={navigation}/>
+                <View style={admChangeUserStyle.content}>
                     <TextInput 
                         label="Nome"
                         name="nome"
                         value={nome}
                         onChangeText={setNome}
                         error={!!erros.nome}  
-                        style={cadastroStyle.inputStyle}/>
+                        style={admChangeUserStyle.inputStyle}/>
                     <HelperText 
                         type="error"
                         visible={!!erros.nome}>
@@ -101,7 +101,7 @@ function CadastroScreen({navigation, route }){
                         value={cpf}
                         onChangeText={setCpf}
                         error={!!erros.cpf}  
-                        style={cadastroStyle.inputStyle}/>
+                        style={admChangeUserStyle.inputStyle}/>
                     <HelperText 
                         type="error"
                         visible={!!erros.cpf}>
@@ -115,7 +115,7 @@ function CadastroScreen({navigation, route }){
                         onChangeText={setEmail}
                         error={!!erros.email} 
                         keyboardType="email-address"  
-                        style={cadastroStyle.inputStyle}/>
+                        style={admChangeUserStyle.inputStyle}/>
                     <HelperText 
                         type="error"
                         visible={!!erros.email}>
@@ -129,29 +129,29 @@ function CadastroScreen({navigation, route }){
                         onChangeText={setSenha}
                         error={!!erros.senha}
                         secureTextEntry={true} 
-                        style={cadastroStyle.inputStyle}/>
+                        style={admChangeUserStyle.inputStyle}/>
                     <HelperText 
                         type="error"
                         visible={!!erros.senha}>
                         {erros.senha}
                     </HelperText>
 
-                    {visivel && <View style={cadastroStyle.checkbox}>
+                    <View style={admChangeUserStyle.checkbox}>
                         <Checkbox
                             status={status ? 'checked' : 'unchecked'}
                                 onPress={() => {
                                     setStatus(!status);
                                 }}
                         />
-                        <Text style={cadastroStyle.text}>Ativa?</Text>
-                    </View>}
-                    {upload && <ProgressBar indeterminate={true} style={cadastroStyle.progressStyle}/>}
+                        <Text style={admChangeUserStyle.text}>Ativa?</Text>
+                    </View>
+                    {upload && <ProgressBar indeterminate={true} style={admChangeUserStyle.progressStyle}/>}
                     
                     <Button 
                         icon="camera" 
                         mode="contained" 
                         onPress={() => {}} 
-                        style={cadastroStyle.button}>
+                        style={admChangeUserStyle.button}>
                         Selecionar Imagem
                     </Button>
 
@@ -160,7 +160,7 @@ function CadastroScreen({navigation, route }){
                         loading={salvandoRegistro}
                         onPress={() => salvaRegistro()} 
                         mode="contained" 
-                        style={cadastroStyle.button}>
+                        style={admChangeUserStyle.button}>
                         Cadastrar
                     </Button>
                 </View>
@@ -169,5 +169,5 @@ function CadastroScreen({navigation, route }){
     )
 }
 
-export default withTheme(CadastroScreen)
+export default withTheme(AdmChangeUser)
 

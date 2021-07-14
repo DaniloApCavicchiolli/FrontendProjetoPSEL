@@ -14,7 +14,7 @@ function UserAdminScreen({ navigation}) {
 
     useEffect(() => {
         obterRegistros()
-    }, [])//executar somente no load da interface
+    }, [])
 
     async function obterRegistros() {
         setCarregandoRegistros(true)
@@ -70,7 +70,7 @@ function UserAdminScreen({ navigation}) {
                     style={userAdminStyle.fab}
                     icon='plus'
                     label=''
-                    onPress={() => navigation.navigate('CadastroScreen', {
+                    onPress={() => navigation.navigate('AdmChangeUser', {
                         data: {
                             _id: null,
                             nome: '',

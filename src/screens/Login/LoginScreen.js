@@ -3,7 +3,7 @@ import { SafeAreaView, View, Alert, TextInput } from 'react-native'
 import { Button, Card, withTheme } from 'react-native-paper'
 import { loginStyle } from './LoginStyle'
 import { BACKEND } from '../../constants'
-import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 function LoginScreen({navigation}){
 
@@ -26,11 +26,15 @@ function LoginScreen({navigation}){
         }).then(response => response.json())
             .then(data => {
                 
-                Alert.alert('Login efetuado com sucesso!')
+                Alert.alert('Logando...','Login efetuado com sucesso!')
 
                 if(data.nivel === 999){
+                    setEmail('')
+                    setSenha('')
                     navigation.navigate('UserAdminScreen')
                 }else {
+                    setEmail('')
+                    setSenha('')
                     navigation.navigate('UserComumScreen', {data: data})
                 }
             })
@@ -41,14 +45,6 @@ function LoginScreen({navigation}){
             setLogando(false)
     }
 
-    // const storeData = async (data) => {
-    //     try {
-    //       const jsonValue = JSON.stringify(data)
-    //       await AsyncStorage.setItem('@storage_Key', jsonValue)
-    //     } catch (e) {
-    //       // saving error
-    //     }
-    //   }
 
     return (
 

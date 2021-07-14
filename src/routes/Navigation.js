@@ -8,6 +8,7 @@ import CadastroScreen from '../screens/Cadastro/CadastroScreen'
 import HomeScreen from '../screens/Home/HomeScreen'
 import UserAdminScreen from '../screens/UserAdmin/UserAdminScreen'
 import UserComumScreen from '../screens/UserComum/UserComumScreen'
+import AdmChangeUser from '../screens/UserAdmin/AdmChangeUser'
 
 const Stack = createStackNavigator()
 
@@ -39,6 +40,11 @@ export default function Navigation(){
                 <Stack.Screen 
                     name="UserComumScreen" 
                     component={UserComumScreen}
+                    options={{headerShown: false}}
+                />
+                <Stack.Screen 
+                    name="AdmChangeUser" 
+                    component={AdmChangeUser}
                     options={{headerShown: false}}
                 />
             </Stack.Navigator>

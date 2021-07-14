@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { View, FlatList, SafeAreaView, Image, Alert, TouchableOpacity, Text, ScrollView } from 'react-native'
-import { withTheme, List, Button,   TextInput,} from 'react-native-paper'
+import { View, SafeAreaView, Image } from 'react-native'
+import { withTheme, Button,   TextInput,} from 'react-native-paper'
 import { userComumStyle } from './UserComumStyle'
 
 import Header from '../../components/Header'
@@ -9,10 +9,11 @@ function UserComumScreen({ navigation, route }) {
 
     const { data } = route.params
 
-    const [nome, setNome] = useState(data.nome)
-    const [cpf, setCpf] = useState(data.cpf)
-    const [email, setEmail] = useState(data.email)
-    const [senha, setSenha] = useState(data.senha)
+    const alteraRegistro = async (data) => {
+        navigation.navigate('CadastroScreen', {
+            data: data
+        })
+    }
 
     return (
         <SafeAreaView style={{flex: 1}}>
@@ -28,7 +29,7 @@ function UserComumScreen({ navigation, route }) {
                 <TextInput 
                     label="Nome"
                     name="nome"
-                    value={nome}
+                    value={data.nome}
                     mode='outlined'
                     disabled={true}
                     style={userComumStyle.input}
@@ -37,7 +38,7 @@ function UserComumScreen({ navigation, route }) {
                 <TextInput 
                     label="CPF"
                     name="cpf"
-                    value={cpf}
+                    value={data.cpf}
                     mode='outlined'
                     disabled={true}
                     style={userComumStyle.input}
@@ -46,27 +47,19 @@ function UserComumScreen({ navigation, route }) {
                 <TextInput 
                     label="Email"
                     name="email"
-                    value={email}
+                    value={data.email}
                     mode='outlined'
                     disabled={true}
                     keyboardType="email-address"  
                     style={userComumStyle.input}
                 />
-                <TextInput 
-                    label="Senha"
-                    name="senha"
-                    value={senha}
-                    mode='outlined'
-                    disabled={true}
-                    secureTextEntry={true} 
-                    style={userComumStyle.input}
-                />
+                
                 </View>
                 <View style={userComumStyle.containerBotao}>
                 <Button 
                     icon="account-edit" 
                     mode="contained" 
-                    onPress={() => {}} 
+                    onPress={() => alteraRegistro(data)} 
                     style={userComumStyle.buttonAlterar}>
                     Alterar
                 </Button>

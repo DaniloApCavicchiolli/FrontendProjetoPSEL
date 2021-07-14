@@ -55,7 +55,6 @@ function ListaRegistro({ data, navigation }){
         }).then(response => response.json())
             .then(data => {
                 Alert.alert('Aviso', data.message)
-                navigation.goBack()
             })
             .catch(function (error) {
                 console.error('Houve um problema ao excluir o registro: ' + error.message);
@@ -63,7 +62,7 @@ function ListaRegistro({ data, navigation }){
     }
 
     const alteraRegistro = async (data) => {
-        navigation.navigate('CadastroScreen', {
+        navigation.navigate('AdmChangeUser', {
             data: data
         })
     }
