@@ -28,7 +28,6 @@ function AdmChangeUser({navigation, route }){
         if (!nome || nome === '') novosErros.nome = 'O nome não pode ser vazio!'
         if (!cpf || cpf === '') novosErros.cpf = 'O cpf não pode ser vazio!'
         if (!email || email === '') novosErros.email = 'O email não pode ser vazio!'
-        if (!senha || senha === '') novosErros.senha = 'A senha não pode ser vazia!'
         return novosErros
       }
 
@@ -46,8 +45,8 @@ function AdmChangeUser({navigation, route }){
                             status: statusRegistro, 
                             cpf: cpf, 
                             email: email, 
-                            senha: senha,
                             nivel: 1,
+                            senha: senha,
                             _id: data._id 
                         }
           setSalvandoRegistro(true)
@@ -66,7 +65,6 @@ function AdmChangeUser({navigation, route }){
                 setNome('')
                 setCpf('')
                 setEmail('')
-                setSenha('')
                 Alert.alert('Salvando...','Registro salvo com sucesso!')
             })
             .catch(function (error) {
@@ -120,20 +118,6 @@ function AdmChangeUser({navigation, route }){
                         type="error"
                         visible={!!erros.email}>
                         {erros.email}
-                    </HelperText>
-
-                    <TextInput 
-                        label="Senha"
-                        name="senha"
-                        value={senha}
-                        onChangeText={setSenha}
-                        error={!!erros.senha}
-                        secureTextEntry={true} 
-                        style={admChangeUserStyle.inputStyle}/>
-                    <HelperText 
-                        type="error"
-                        visible={!!erros.senha}>
-                        {erros.senha}
                     </HelperText>
 
                     <View style={admChangeUserStyle.checkbox}>

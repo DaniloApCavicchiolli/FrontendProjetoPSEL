@@ -70,14 +70,14 @@ function UserAdminScreen({ navigation}) {
                     style={userAdminStyle.fab}
                     icon='plus'
                     label=''
-                    onPress={() => navigation.navigate('AdmChangeUser', {
+                    onPress={() => navigation.navigate('CadastroScreen', {
                         data: {
                             _id: null,
                             nome: '',
                             status: true,
                             cpf: '',
-                            email: '',
-                            senha: ''
+                            senha: '',
+                            email: ''
                         }
                     })}
                 />

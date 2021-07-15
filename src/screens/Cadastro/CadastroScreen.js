@@ -136,15 +136,7 @@ function CadastroScreen({navigation, route }){
                         {erros.senha}
                     </HelperText>
 
-                    {visivel && <View style={cadastroStyle.checkbox}>
-                        <Checkbox
-                            status={status ? 'checked' : 'unchecked'}
-                                onPress={() => {
-                                    setStatus(!status);
-                                }}
-                        />
-                        <Text style={cadastroStyle.text}>Ativa?</Text>
-                    </View>}
+                    
                     {upload && <ProgressBar indeterminate={true} style={cadastroStyle.progressStyle}/>}
                     
                     <Button 
